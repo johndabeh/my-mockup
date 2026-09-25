@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>World Events — Hierarchical Mockup</title>
+<style>
+:root{
+  --bg:#f6f7fb; --text:#172033; --muted:#667085; --card:#fff;
+  --primary:#2f5bea; --primary2:#173baf; --line:#e7eaf1;
+  --shadow:0 12px 35px rgba(20,35,70,.10); --radius:22px;
+}
+*{box-sizing:border-box;scroll-behavior:smooth}
+body{margin:0;font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--text)}
+button,a{font:inherit}
+.header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav{max-width:1180px;margin:auto;padding:14px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.logo{font-size:22px;font-weight:800;letter-spacing:-.5px}.logo span{color:var(--primary)}
+.navlinks{display:flex;gap:8px}.navlinks a{color:var(--text);text-decoration:none;padding:9px 12px;border-radius:10px;font-size:14px}.navlinks a:hover{background:#eef2ff}
+.menu{display:none;border:0;background:#eef2ff;padding:9px 12px;border-radius:10px;cursor:pointer}
+.hero{min-height:500px;padding:70px 22px 60px;display:grid;place-items:center;background:
+linear-gradient(120deg,rgba(8,18,44,.82),rgba(34,72,150,.58)),
+url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1800&q=85") center/cover}
+.hero-inner{max-width:900px;text-align:center;color:#fff}.eyebrow{text-transform:uppercase;letter-spacing:3px;font-size:12px;font-weight:700;opacity:.9}
+.hero h1{font-size:clamp(40px,7vw,76px);line-height:1.02;margin:14px 0}.hero p{font-size:18px;line-height:1.6;max-width:680px;margin:0 auto 26px;color:#eef3ff}
+.cta{display:inline-block;background:#fff;color:#173baf;text-decoration:none;font-weight:800;padding:13px 20px;border-radius:13px;box-shadow:var(--shadow)}
+.container{max-width:1180px;margin:auto;padding:64px 22px}
+.section-title{text-align:center;margin-bottom:35px}.section-title h2{font-size:34px;margin:0 0 9px}.section-title p{color:var(--muted);margin:0}
+.filters{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:30px}
+.filter{border:1px solid var(--line);background:#fff;color:var(--text);padding:9px 15px;border-radius:999px;cursor:pointer}.filter.active,.filter:hover{background:var(--primary);color:#fff;border-color:var(--primary)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);transition:.2s;display:flex;flex-direction:column}
+.card:hover{transform:translateY(-4px)}
+.card-img{height:210px;background-size:cover;background-position:center;position:relative}
+.badge{position:absolute;left:15px;top:15px;background:rgba(255,255,255,.92);padding:7px 10px;border-radius:999px;font-size:12px;font-weight:800}
+.card-body{padding:20px;display:flex;flex-direction:column;flex:1}.card h3{margin:0 0 7px;font-size:23px}.country{color:var(--primary);font-weight:700;font-size:13px;margin-bottom:11px}.card p{color:var(--muted);line-height:1.55;margin:0 0 18px}.learn{margin-top:auto;border:0;background:#edf2ff;color:#2145bb;padding:11px 14px;border-radius:11px;cursor:pointer;font-weight:700}
+.learn:hover{background:#dfe7ff}
+.detail{display:none;position:fixed;inset:0;background:rgba(8,15,32,.65);z-index:100;padding:20px;align-items:center;justify-content:center}
+.modal{background:#fff;width:min(760px,100%);max-height:90vh;overflow:auto;border-radius:24px;box-shadow:0 30px 90px rgba(0,0,0,.3)}
+.modal-img{height:260px;background-size:cover;background-position:center}.modal-body{padding:26px}.close{float:right;border:0;background:#f0f2f6;border-radius:50%;width:38px;height:38px;cursor:pointer;font-size:20px}.modal h2{font-size:32px;margin:5px 0}.modal p{line-height:1.7;color:var(--muted)}
+.info{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:20px}.info div{background:#f7f8fb;padding:15px;border-radius:14px}.info strong{display:block;margin-bottom:5px}
+.about{background:#fff}.hierarchy{display:grid;grid-template-columns:1fr 1fr;gap:35px;align-items:center}.steps{display:grid;gap:13px}.step{display:flex;gap:15px;align-items:flex-start;padding:16px;background:#f7f8fb;border-radius:15px}.num{width:34px;height:34px;display:grid;place-items:center;background:var(--primary);color:#fff;border-radius:50%;font-weight:800;flex:none}.mock-nav{border:1px solid var(--line);border-radius:20px;padding:22px;background:#fff;box-shadow:var(--shadow)}.mock-nav .bar{height:40px;background:#eef2ff;border-radius:10px;margin-bottom:12px}.mock-nav .line{height:14px;background:#eef2ff;border-radius:7px;margin:9px 0}.mock-nav .line.small{width:55%}.mock-nav .line.mid{width:75%}
+footer{background:#10182c;color:#d9e0ef;padding:30px 22px;text-align:center;font-size:14px}
+@media(max-width:850px){.grid{grid-template-columns:repeat(2,1fr)}.hierarchy{grid-template-columns:1fr}.navlinks{display:none}.menu{display:block}}
+@media(max-width:560px){.grid{grid-template-columns:1fr}.hero{min-height:470px;padding-top:55px}.container{padding:48px 16px}.info{grid-template-columns:1fr}.nav{padding:12px 16px}}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <nav class="nav">
+    <div class="logo">World<span>Events</span></div>
+    <button class="menu" onclick="toggleMenu()">☰</button>
+    <div class="navlinks" id="navlinks">
+      <a href="#home">Home</a><a href="#events">Events</a><a href="#about">About</a>
+    </div>
+  </nav>
+</header>
+
+<section class="hero" id="home">
+  <div class="hero-inner">
+    <div class="eyebrow">Explore • Discover • Experience</div>
+    <h1>Famous Events Around the World</h1>
+    <p>A simple hierarchical travel-event interface where users start with all events, choose a country, then open an event for details.</p>
+    <a class="cta" href="#events">Explore Events</a>
+  </div>
+</section>
+
+<section class="container" id="events">
+  <div class="section-title">
+    <h2>Explore by Country</h2>
+    <p>Choose a country to filter the event cards.</p>
+  </div>
+
+  <div class="filters">
+    <button class="filter active" data-country="all">All</button>
+    <button class="filter" data-country="Switzerland">Switzerland</button>
+    <button class="filter" data-country="Lapland">Lapland</button>
+    <button class="filter" data-country="Japan">Japan</button>
+    <button class="filter" data-country="China">China</button>
+    <button class="filter" data-country="Canada">Canada</button>
+    <button class="filter" data-country="Australia">Australia</button>
+  </div>
+
+  <div class="grid" id="grid"></div>
+</section>
+
+<section class="about" id="about">
+  <div class="container">
+    <div class="section-title">
+      <h2>Why Hierarchical?</h2>
+      <p>The interface follows a clear top-to-bottom information structure.</p>
+    </div>
+    <div class="hierarchy">
+      <div class="steps">
+        <div class="step"><div class="num">1</div><div><b>Home</b><br><span style="color:#667085">The user sees the main travel-event introduction.</span></div></div>
+        <div class="step"><div class="num">2</div><div><b>Country</b><br><span style="color:#667085">The user selects a country to narrow the choices.</span></div></div>
+        <div class="step"><div class="num">3</div><div><b>Event</b><br><span style="color:#667085">The user clicks an event card to open more information.</span></div></div>
+        <div class="step"><div class="num">4</div><div><b>Details</b><br><span style="color:#667085">A responsive detail panel shows why the event is famous.</span></div></div>
+      </div>
+      <div class="mock-nav">
+        <b>Hierarchy Preview</b>
+        <div class="line mid"></div>
+        <div class="line small"></div>
+        <div class="bar"></div>
+        <div class="line"></div><div class="line mid"></div><div class="line small"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>WorldEvents Mockup • Hierarchical Design • Responsive Prototype</footer>
+
+<div class="detail" id="detail" onclick="closeDetail(event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-img" id="modalImg"></div>
+    <div class="modal-body">
+      <button class="close" onclick="closeDetail()">×</button>
+      <div class="country" id="modalCountry"></div>
+      <h2 id="modalTitle"></h2>
+      <p id="modalText"></p>
+      <div class="info">
+        <div><strong>Location</strong><span id="modalLocation"></span></div>
+        <div><strong>Highlight</strong><span id="modalHighlight"></span></div>
+        <div><strong>Experience</strong><span id="modalExperience"></span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const events = [
+ {country:"Switzerland",title:"Swiss Alps Winter Festival",location:"Swiss Alps, Switzerland",highlight:"Snowy mountain scenery",experience:"Winter culture and alpine views",text:"Switzerland is famous for its Alps, beautiful mountain villages, and winter scenery. This event design highlights the country's strong connection to alpine tourism and snow experiences.",img:"https://images.unsplash.com/photo-1527668752968-14dc70a27c95?auto=format&fit=crop&w=1200&q=85"},
+ {country:"Lapland",title:"Northern Lights Experience",location:"Lapland, Finland",highlight:"Aurora borealis",experience:"Night-sky adventure",text:"Lapland is famous for the Northern Lights, snowy landscapes, and Arctic experiences. Visitors often travel there for the chance to see the colorful aurora in the winter sky.",img:"https://images.unsplash.com/photo-1483347756197-71ef80e95f73?auto=format&fit=crop&w=1200&q=85"},
+ {country:"Japan",title:"Cherry Blossom Festival",location:"Japan",highlight:"Sakura season",experience:"Spring culture and scenery",text:"Japan is famous for cherry blossoms, which are strongly connected with spring, nature, and seasonal traditions. Parks and streets become popular viewing places during bloom season.",img:"https://images.unsplash.com/photo-1522383225653-ed111181a951?auto=format&fit=crop&w=1200&q=85"},
+ {country:"China",title:"Chinese New Year",location:"China",highlight:"Lanterns and traditions",experience:"Celebration and family culture",text:"Chinese New Year is famous for colorful decorations, family gatherings, traditional performances, and festive celebrations. It is one of the most important traditional celebrations in Chinese culture.",img:"https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1200&q=85"},
+ {country:"Canada",title:"Winter Carnival",location:"Quebec City, Canada",highlight:"Snow and winter activities",experience:"Cold-weather festival",text:"Canada is known for its long, snowy winters, and winter carnivals showcase that environment through snow activities, ice displays, and seasonal celebrations.",img:"https://images.unsplash.com/photo-1517299321609-52687d1bc55a?auto=format&fit=crop&w=1200&q=85"},
+ {country:"Australia",title:"Sydney New Year Celebration",location:"Sydney, Australia",highlight:"Harbour fireworks",experience:"City celebration",text:"Australia is famous for its Sydney Harbour celebrations, especially the large New Year fireworks display. The harbour, Opera House, and city skyline create a memorable event setting.",img:"https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?auto=format&fit=crop&w=1200&q=85"}
+];
+
+const grid=document.getElementById("grid");
+function render(country="all"){
+ grid.innerHTML="";
+ events.filter(e=>country==="all"||e.country===country).forEach((e,i)=>{
+  const card=document.createElement("article"); card.className="card";
+  card.innerHTML=`<div class="card-img" style="background-image:url('${e.img}')"><span class="badge">${e.country}</span></div>
+  <div class="card-body"><div class="country">${e.country}</div><h3>${e.title}</h3><p>${e.text}</p>
+  <button class="learn" onclick="openDetail(${events.indexOf(e)})">View Event Details →</button></div>`;
+  grid.appendChild(card);
+ });
+}
+function openDetail(i){
+ const e=events[i];
+ document.getElementById("modalImg").style.backgroundImage=`url('${e.img}')`;
+ document.getElementById("modalCountry").textContent=e.country;
+ document.getElementById("modalTitle").textContent=e.title;
+ document.getElementById("modalText").textContent=e.text;
+ document.getElementById("modalLocation").textContent=e.location;
+ document.getElementById("modalHighlight").textContent=e.highlight;
+ document.getElementById("modalExperience").textContent=e.experience;
+ document.getElementById("detail").style.display="flex";
+ document.body.style.overflow="hidden";
+}
+function closeDetail(){document.getElementById("detail").style.display="none";document.body.style.overflow="auto";}
+function toggleMenu(){const n=document.getElementById("navlinks");n.style.display=n.style.display==="flex"?"none":"flex";n.style.flexDirection="column";n.style.position="absolute";n.style.top="60px";n.style.right="16px";n.style.background="#fff";n.style.padding="10px";n.style.borderRadius="14px";n.style.boxShadow="0 12px 30px rgba(0,0,0,.12)";}
+document.querySelectorAll(".filter").forEach(btn=>btn.addEventListener("click",()=>{
+ document.querySelectorAll(".filter").forEach(b=>b.classList.remove("active"));btn.classList.add("active");render(btn.dataset.country);
+}));
+render();
+</script>
+</body>
+</html>
